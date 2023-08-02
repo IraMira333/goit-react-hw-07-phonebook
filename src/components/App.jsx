@@ -4,6 +4,7 @@ import Filter from './Filter/Filter';
 import css from './App.module.css';
 import { useSelector } from 'react-redux';
 import { getContacts, getFilter } from 'redux/selectors';
+import { fetchContacts } from 'redux/operations';
 
 export default function App() {
   const contacts = useSelector(getContacts);
@@ -14,7 +15,6 @@ export default function App() {
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   }
-
   const filteredContacts = getFilterContacts();
   return (
     <div className={css.phonebook}>
