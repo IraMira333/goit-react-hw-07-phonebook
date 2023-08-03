@@ -12,7 +12,7 @@ const ContactList = ({ contacts }) => {
         return (
           <li className={css.liContact} key={contact.id}>
             <span>{contact.name}: </span>
-            <span>{contact.number}</span>
+            <span>{contact.phone}</span>
 
             <button
               className={css.listBtn}
@@ -31,7 +31,7 @@ ContactList.propTypes = {
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      number: PropTypes.number.isRequired,
+      phone: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired,
     })
   ),
