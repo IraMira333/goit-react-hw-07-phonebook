@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addTask } from 'redux/contactsSlice';
+import { addTask } from 'reduxThunk/contactsSlice';
 import css from './ContactForm.module.css';
 import shortid from 'shortid';
-import { getContacts } from 'redux/selectors';
+import { getContacts } from 'reduxThunk/selectors';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
