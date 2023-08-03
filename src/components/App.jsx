@@ -3,12 +3,12 @@ import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 import css from './App.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { getContacts, getFilter } from 'redux/selectors';
-import * as contactsOperations from '../redux/operations';
+import { getContacts, getFilter } from 'reduxThunk/selectors';
+import * as contactsOperations from '../reduxThunk/operationsThunk';
 import { useEffect } from 'react';
 
 export default function App() {
-  const entities = useSelector(getContacts);
+  const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
 
@@ -17,7 +17,7 @@ export default function App() {
   }, [dispatch]);
 
   function getFilterContacts() {
-    return entities.filter(contact =>
+    return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   }
@@ -27,7 +27,7 @@ export default function App() {
       <h2>Phonebook</h2>
       <ContactForm />
       <h2>Contacts</h2>
-      {entities.length > 0 ? (
+      {contacts.length > 0 ? (
         <Filter />
       ) : (
         <p className={css.noContact}>You don't have any contact yet</p>
