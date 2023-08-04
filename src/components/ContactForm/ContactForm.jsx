@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addTask } from 'reduxThunk/contactsSlice';
-import css from './ContactForm.module.css';
-import shortid from 'shortid';
 import { getContacts } from 'reduxThunk/selectors';
+import { addContact } from 'reduxThunk/operationsThunk';
+import { useId } from 'react';
+import css from './ContactForm.module.css';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
@@ -21,12 +21,12 @@ export default function ContactForm() {
       alert(`${name} is already in contacts!`);
       return;
     }
-    dispatch(addTask({ name, number }));
+    dispatch(addContact({ name, number }));
     e.target.reset();
   };
 
-  const nameId = shortid.generate();
-  const numberId = shortid.generate();
+  const nameId = useId();
+  const numberId = useId();
 
   return (
     <div className={css.formbox}>
