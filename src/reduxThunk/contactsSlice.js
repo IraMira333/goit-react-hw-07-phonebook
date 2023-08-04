@@ -23,7 +23,7 @@ const contactsSlice = createSlice({
       .addCase(fetchContacts.fulfilled, (state, action) => {
         // return { ...state, contactsInfo: action.payload, isLoading: false };
         state.contactsInfo = action.payload;
-        console.log(state.contactsInfo);
+
         state.isLoading = false;
       })
       .addCase(fetchContacts.pending, handlePending)
