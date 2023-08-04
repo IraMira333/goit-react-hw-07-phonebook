@@ -1,5 +1,14 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit';
-import { fetchContacts } from './operationsThunk';
+import { createSlice } from '@reduxjs/toolkit';
+import { addContact, fetchContacts, removeContact } from './operationsThunk';
+
+const handlePending = state => {
+  state.isLoading = true;
+};
+
+const handleRejected = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+};
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -8,45 +17,36 @@ const contactsSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  reducers: {
-    addTask: {
-      reducer(state, action) {
-        state.contactsInfo.push(action.payload);
-      },
-      prepare(contact) {
-        return {
-          payload: {
-            id: nanoid(),
-            ...contact,
-          },
-        };
-      },
-    },
-    removeContact(state, action) {
-      const index = state.contactsInfo.findIndex(
-        contact => contact.id === action.payload
-      );
-      state.contactsInfo.splice(index, 1);
-    },
-  },
+
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.fulfilled, (state, action) => {
         // return { ...state, contactsInfo: action.payload, isLoading: false };
         state.contactsInfo = action.payload;
+        console.log(state.contactsInfo);
         state.isLoading = false;
       })
-      .addCase(fetchContacts.pending, state => {
-        // return { ...state, isLoading: true, error: null };
+      .addCase(fetchContacts.pending, handlePending)
+      .addCase(fetchContacts.rejected, handleRejected)
+      .addCase(addContact.pending, handlePending)
+      .addCase(addContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
+        state.contactsInfo.push(action.payload);
       })
-      .addCase(fetchContacts.rejected, (state, action) => {
-        // return { ...state, isLoading: false, error: action.payload };
+      .addCase(addContact.rejected, handleRejected)
+      .addCase(removeContact.pending, handlePending)
+      .addCase(removeContact.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload;
-      });
+        state.error = null;
+        const index = state.contactsInfo.findIndex(
+          contact => contact.id === action.payload
+        );
+        console.log(state.contactsInfo[index]);
+        state.contactsInfo.splice(index, 1);
+      })
+      .addCase(removeContact.rejected, handleRejected);
   },
 });
-export const { addTask, removeContact } = contactsSlice.actions;
+
 export const contactsReducer = contactsSlice.reducer;
