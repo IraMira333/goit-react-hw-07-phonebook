@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addContact, fetchContacts, removeContact } from './operationsThunk';
+import { addContact, fetchContacts, deleteContact } from './operationsThunk';
 
 const handlePending = state => {
   state.isLoading = true;
@@ -35,8 +35,8 @@ const contactsSlice = createSlice({
         state.contactsInfo.push(action.payload);
       })
       .addCase(addContact.rejected, handleRejected)
-      .addCase(removeContact.pending, handlePending)
-      .addCase(removeContact.fulfilled, (state, action) => {
+      .addCase(deleteContact.pending, handlePending)
+      .addCase(deleteContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
         const index = state.contactsInfo.findIndex(
@@ -45,7 +45,7 @@ const contactsSlice = createSlice({
         console.log(state.contactsInfo[index]);
         state.contactsInfo.splice(index, 1);
       })
-      .addCase(removeContact.rejected, handleRejected);
+      .addCase(deleteContact.rejected, handleRejected);
   },
 });
 
