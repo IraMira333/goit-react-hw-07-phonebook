@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from 'reduxThunk/selectors';
+import { selectContacts } from 'reduxThunk/selectors';
 import { addContact } from 'reduxThunk/operationsThunk';
 import { useId } from 'react';
 import css from './ContactForm.module.css';
@@ -7,7 +7,7 @@ import css from './ContactForm.module.css';
 export default function ContactForm() {
   const dispatch = useDispatch();
 
-  const findingDoubleName = useSelector(getContacts);
+  const findingDoubleName = useSelector(selectContacts);
 
   const onSubmit = e => {
     e.preventDefault();
