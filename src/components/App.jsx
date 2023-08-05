@@ -3,13 +3,13 @@ import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 import css from './App.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { getContacts, getFilter } from 'reduxThunk/selectors';
+import { selectContacts, selectFilter } from 'reduxThunk/selectors';
 import * as contactsOperations from '../reduxThunk/operationsThunk';
 import { useEffect } from 'react';
 
 export default function App() {
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   useEffect(() => {
