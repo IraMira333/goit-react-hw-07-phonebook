@@ -26,7 +26,6 @@ export default function App() {
   }, [dispatch]);
   const showContacts = !isLoading && !isError && contacts.length > 0;
   const showNoContacts = !isLoading && !isError && contacts.length === 0;
-  console.log(contacts.length);
 
   return (
     <div className={css.phonebook}>
@@ -34,7 +33,7 @@ export default function App() {
       <ContactForm />
       <h2>Contacts</h2>
       {isLoading && <Spiner />}
-      {isError && <p>{}</p>}
+      {isError && <p>{isError}</p>}
       {showContacts && (
         <>
           <Filter />
